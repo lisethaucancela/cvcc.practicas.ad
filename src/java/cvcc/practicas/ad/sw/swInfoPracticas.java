@@ -14,6 +14,7 @@ import cvcc.practicas.ad.funciones.actividadplanificada.ActividadPlanificadaLN;
 import cvcc.practicas.ad.funciones.convenio.ConvenioLN;
 import cvcc.practicas.ad.funciones.entidad.EntidadLN;
 import cvcc.practicas.ad.funciones.facultad.FacultadLN;
+import cvcc.practicas.ad.funciones.proyectos.ProyectoLN;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -224,4 +225,19 @@ public class swInfoPracticas {
         return result;
     }
 
+    //
+    @WebMethod(operationName = "codigoEntidad")
+    public String codigoEntidad(@WebParam(name = "cedula") String cedula) {
+        UsuarioLN uLN = new UsuarioLN();
+        String result = uLN.codigoEntidad(cedula);
+        return result;
+    }
+
+    //proyectos  
+    @WebMethod(operationName = "loadLProyectos")
+    public String loadLProyectos() {
+        ProyectoLN uLN = new ProyectoLN();
+        String result = uLN.loadLProyectos();
+        return result;
+    }
 }

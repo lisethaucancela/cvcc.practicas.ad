@@ -3,7 +3,6 @@ package cvcc.practicas.ad.funciones.usuario;
 import cvcc.practicas.ad.conexion.AccesoDatos;
 import cvcc.practicas.entidades.CUsuario;
 import java.sql.ResultSet;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,6 +28,10 @@ public class UsuarioAD extends CUsuario {
         } catch (Exception e) {
             //
         }
+
+    }
+
+    UsuarioAD() {
 
     }
 
@@ -67,5 +70,24 @@ public class UsuarioAD extends CUsuario {
             throw e;
         }
         return num;
+    }
+
+    public String codigoEntidad(AccesoDatos accesoDatos, String cedula) throws Exception {
+        String result = "";
+
+        try {
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.append("SELECT \n" + "  entidad.codigo_entidad\n" + "FROM \n" + "  practicas.usuario, \n" + "  practicas.usuario_entidad, \n" + "  practicas.entidad\n" + "WHERE \n" + "  usuario.id_usuario = usuario_entidad.id_usuario AND\n" + "  entidad.id_entidad = usuario_entidad.id_entidad AND\n" + "  usuario.cedula='").append(cedula).append("';");
+
+            if (accesoDatos.EjecutarSQL(strSQL.toString()) == 1) {
+                ResultSet rslCodigoEmpresa = accesoDatos.getRs();
+                while (rslCodigoEmpresa.next()) {
+                    result = rslCodigoEmpresa.getString(1);
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return result;
     }
 }

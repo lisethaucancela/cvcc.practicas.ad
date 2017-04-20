@@ -6,12 +6,9 @@
 package cvcc.practicas.ad.funciones.funcionario;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import cvcc.practicas.ad.conexion.AccesoDatos;
 import cvcc.practicas.entidades.CFuncionario;
 import cvcc.practicas.entidades.CFuncionarios;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -68,7 +65,7 @@ public class FuncionarioLN {
                 Gson gson = new Gson();
                 CFuncionarios result = gson.fromJson(strCadenaJSON, CFuncionarios.class);
                 FuncionariosAD fAD = new FuncionariosAD(result);
-                ret = fAD.insertarFuncionario(accesoDatos);
+                ret = fAD.guardarFuncionario(accesoDatos);
                 accesoDatos.Desconectar();
             }
         } catch (Exception e) {

@@ -59,5 +59,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/cvcc/practicas/ad/sw/espoch"/>
         <delete dir="${build.generated.dir}/jax-wsCache/WSservicioEspoch"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-WSservicioEspoch"/>
+    <target name="wsimport-client-proyectosInvestigacion" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion" destdir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/proyectosInvestigacion/wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WSUnidos/proyectosInvestigacion?WSDL" xnocompile="true" xendorsed="true" package="cvcc.practicas.ad.sw.proyectosInvestigacion">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/proyectosInvestigacion/wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-proyectosInvestigacion" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/cvcc/practicas/ad/sw/proyectosInvestigacion"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/proyectosInvestigacion"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-WSservicioEspoch, wsimport-client-proyectosInvestigacion"/>
 </project>

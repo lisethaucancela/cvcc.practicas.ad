@@ -3,4 +3,6 @@
     <system systemId="http://localhost:8080/WSUnidos/WSservicioEspoch?WSDL" uri="src/conf/xml-resources/web-service-references/WSservicioEspoch/wsdl/localhost_8080/WSUnidos/WSservicioEspoch.wsdl"/>
     <system systemId="http://localhost:8080/WSUnidos/WSservicioEspoch?xsd=1" uri="src/conf/xml-resources/web-service-references/WSservicioEspoch/wsdl/localhost_8080/WSUnidos/WSservicioEspoch.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/WSUnidos/WSservicioEspoch?xsd=2" uri="src/conf/xml-resources/web-service-references/WSservicioEspoch/wsdl/localhost_8080/WSUnidos/WSservicioEspoch.xsd_2.xsd"/>
+    <system systemId="http://localhost:8080/WSUnidos/proyectosInvestigacion?WSDL" uri="src/conf/xml-resources/web-service-references/proyectosInvestigacion/wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.wsdl"/>
+    <system systemId="http://localhost:8080/WSUnidos/proyectosInvestigacion?xsd=1" uri="src/conf/xml-resources/web-service-references/proyectosInvestigacion/wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.xsd_1.xsd"/>
 </catalog>

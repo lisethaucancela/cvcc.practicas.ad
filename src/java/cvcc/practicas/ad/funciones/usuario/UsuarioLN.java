@@ -6,10 +6,7 @@
 package cvcc.practicas.ad.funciones.usuario;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import cvcc.practicas.ad.conexion.AccesoDatos;
-import cvcc.practicas.ad.funciones.practicas.PracticassAD;
-import cvcc.practicas.entidades.CUsuarios;
 
 /**
  *
@@ -36,4 +33,21 @@ public class UsuarioLN {
         }
         return result;
     }
+
+    public String codigoEntidad(String cedula) {
+        String result = "";
+        try {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            if (accesoDatos.Connectar() == 2) {
+                UsuarioAD FAD = new UsuarioAD();
+                result = FAD.codigoEntidad(accesoDatos, cedula);
+                accesoDatos.Desconectar();
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e.getMessage());
+        }
+
+        return result;
+    }
+
 }
