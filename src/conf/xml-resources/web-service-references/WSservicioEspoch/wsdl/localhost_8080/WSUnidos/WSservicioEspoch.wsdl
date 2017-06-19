@@ -7,17 +7,11 @@
 <xsd:import namespace="http://academico.espoch.edu.ec/" schemaLocation="http://localhost:8080/WSUnidos/WSservicioEspoch?xsd=2"/>
 </xsd:schema>
 </types>
-<message name="DatosUsuarioCarrera">
-<part name="parameters" element="tns:DatosUsuarioCarrera"/>
+<message name="hello">
+<part name="parameters" element="tns:hello"/>
 </message>
-<message name="DatosUsuarioCarreraResponse">
-<part name="parameters" element="tns:DatosUsuarioCarreraResponse"/>
-</message>
-<message name="FacultadesTotales">
-<part name="parameters" element="tns:FacultadesTotales"/>
-</message>
-<message name="FacultadesTotalesResponse">
-<part name="parameters" element="tns:FacultadesTotalesResponse"/>
+<message name="helloResponse">
+<part name="parameters" element="tns:helloResponse"/>
 </message>
 <message name="DatosPeriodo">
 <part name="parameters" element="tns:DatosPeriodo"/>
@@ -25,11 +19,11 @@
 <message name="DatosPeriodoResponse">
 <part name="parameters" element="tns:DatosPeriodoResponse"/>
 </message>
-<message name="Convenios">
-<part name="parameters" element="tns:Convenios"/>
+<message name="MallaCurricularPensumVigenteSinDescripcion">
+<part name="parameters" element="tns:MallaCurricularPensumVigenteSinDescripcion"/>
 </message>
-<message name="ConveniosResponse">
-<part name="parameters" element="tns:ConveniosResponse"/>
+<message name="MallaCurricularPensumVigenteSinDescripcionResponse">
+<part name="parameters" element="tns:MallaCurricularPensumVigenteSinDescripcionResponse"/>
 </message>
 <message name="DictadosMateria">
 <part name="parameters" element="tns:DictadosMateria"/>
@@ -37,50 +31,57 @@
 <message name="DictadosMateriaResponse">
 <part name="parameters" element="tns:DictadosMateriaResponse"/>
 </message>
-<message name="MallaCurricularPensumVigenteSinDescripcion">
-<part name="parameters" element="tns:MallaCurricularPensumVigenteSinDescripcion"/>
+<message name="FacultadesTotales">
+<part name="parameters" element="tns:FacultadesTotales"/>
 </message>
-<message name="MallaCurricularPensumVigenteSinDescripcionResponse">
-<part name="parameters" element="tns:MallaCurricularPensumVigenteSinDescripcionResponse"/>
+<message name="FacultadesTotalesResponse">
+<part name="parameters" element="tns:FacultadesTotalesResponse"/>
+</message>
+<message name="DatosUsuarioCarrera">
+<part name="parameters" element="tns:DatosUsuarioCarrera"/>
+</message>
+<message name="DatosUsuarioCarreraResponse">
+<part name="parameters" element="tns:DatosUsuarioCarreraResponse"/>
+</message>
+<message name="PeriodosAcademicos">
+<part name="parameters" element="tns:PeriodosAcademicos"/>
+</message>
+<message name="PeriodosAcademicosResponse">
+<part name="parameters" element="tns:PeriodosAcademicosResponse"/>
 </message>
 <portType name="WSservicioEspoch">
-<operation name="DatosUsuarioCarrera">
-<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosUsuarioCarreraRequest" message="tns:DatosUsuarioCarrera"/>
-<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosUsuarioCarreraResponse" message="tns:DatosUsuarioCarreraResponse"/>
-</operation>
-<operation name="FacultadesTotales">
-<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/FacultadesTotalesRequest" message="tns:FacultadesTotales"/>
-<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/FacultadesTotalesResponse" message="tns:FacultadesTotalesResponse"/>
+<operation name="hello">
+<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/helloRequest" message="tns:hello"/>
+<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/helloResponse" message="tns:helloResponse"/>
 </operation>
 <operation name="DatosPeriodo">
 <input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosPeriodoRequest" message="tns:DatosPeriodo"/>
 <output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosPeriodoResponse" message="tns:DatosPeriodoResponse"/>
 </operation>
-<operation name="Convenios">
-<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/ConveniosRequest" message="tns:Convenios"/>
-<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/ConveniosResponse" message="tns:ConveniosResponse"/>
+<operation name="MallaCurricularPensumVigenteSinDescripcion">
+<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/MallaCurricularPensumVigenteSinDescripcionRequest" message="tns:MallaCurricularPensumVigenteSinDescripcion"/>
+<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/MallaCurricularPensumVigenteSinDescripcionResponse" message="tns:MallaCurricularPensumVigenteSinDescripcionResponse"/>
 </operation>
 <operation name="DictadosMateria">
 <input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DictadosMateriaRequest" message="tns:DictadosMateria"/>
 <output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DictadosMateriaResponse" message="tns:DictadosMateriaResponse"/>
 </operation>
-<operation name="MallaCurricularPensumVigenteSinDescripcion">
-<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/MallaCurricularPensumVigenteSinDescripcionRequest" message="tns:MallaCurricularPensumVigenteSinDescripcion"/>
-<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/MallaCurricularPensumVigenteSinDescripcionResponse" message="tns:MallaCurricularPensumVigenteSinDescripcionResponse"/>
+<operation name="FacultadesTotales">
+<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/FacultadesTotalesRequest" message="tns:FacultadesTotales"/>
+<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/FacultadesTotalesResponse" message="tns:FacultadesTotalesResponse"/>
+</operation>
+<operation name="DatosUsuarioCarrera">
+<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosUsuarioCarreraRequest" message="tns:DatosUsuarioCarrera"/>
+<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/DatosUsuarioCarreraResponse" message="tns:DatosUsuarioCarreraResponse"/>
+</operation>
+<operation name="PeriodosAcademicos">
+<input wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/PeriodosAcademicosRequest" message="tns:PeriodosAcademicos"/>
+<output wsam:Action="http://institucionales.ServiciosWeb.pa/WSservicioEspoch/PeriodosAcademicosResponse" message="tns:PeriodosAcademicosResponse"/>
 </operation>
 </portType>
 <binding name="WSservicioEspochPortBinding" type="tns:WSservicioEspoch">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="DatosUsuarioCarrera">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="FacultadesTotales">
+<operation name="hello">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -98,7 +99,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="Convenios">
+<operation name="MallaCurricularPensumVigenteSinDescripcion">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -116,7 +117,25 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="MallaCurricularPensumVigenteSinDescripcion">
+<operation name="FacultadesTotales">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DatosUsuarioCarrera">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="PeriodosAcademicos">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

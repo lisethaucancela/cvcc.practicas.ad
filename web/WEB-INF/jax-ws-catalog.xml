@@ -5,4 +5,8 @@
     <system systemId="http://localhost:8080/WSUnidos/WSservicioEspoch?xsd=2" uri="wsdl/localhost_8080/WSUnidos/WSservicioEspoch.xsd_2.xsd"/>
     <system systemId="http://localhost:8080/WSUnidos/proyectosInvestigacion?WSDL" uri="wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.wsdl"/>
     <system systemId="http://localhost:8080/WSUnidos/proyectosInvestigacion?xsd=1" uri="wsdl/localhost_8080/WSUnidos/proyectosInvestigacion.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WSUnidos/WSProyectosInvestigacion?WSDL" uri="wsdl/localhost_8080/WSUnidos/WSProyectosInvestigacion.wsdl"/>
+    <system systemId="http://localhost:8080/WSUnidos/WSProyectosInvestigacion?xsd=1" uri="wsdl/localhost_8080/WSUnidos/WSProyectosInvestigacion.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WSUnidos/WSVinculacion?WSDL" uri="wsdl/localhost_8080/WSUnidos/WSVinculacion.wsdl"/>
+    <system systemId="http://localhost:8080/WSUnidos/WSVinculacion?xsd=1" uri="wsdl/localhost_8080/WSUnidos/WSVinculacion.xsd_1.xsd"/>
 </catalog>

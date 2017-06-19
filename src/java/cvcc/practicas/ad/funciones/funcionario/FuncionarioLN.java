@@ -7,8 +7,6 @@ package cvcc.practicas.ad.funciones.funcionario;
 
 import com.google.gson.Gson;
 import cvcc.practicas.ad.conexion.AccesoDatos;
-import cvcc.practicas.entidades.CFuncionario;
-import cvcc.practicas.entidades.CFuncionarios;
 
 /**
  *
@@ -16,31 +14,13 @@ import cvcc.practicas.entidades.CFuncionarios;
  */
 public class FuncionarioLN {
 
-    public String loadDatosUnFuncionario(int codigoPractica) {
-        String result = "{}";
-        try {
-            AccesoDatos accesoDatos = new AccesoDatos();
-            if (accesoDatos.Connectar() == 2) {
-                FuncionarioAD FAD = new FuncionarioAD();
-                CFuncionario cF = FAD.loadDatosUnFuncionario(accesoDatos, codigoPractica);
-                Gson gson = new Gson();
-                result = gson.toJson(cF);
-                accesoDatos.Desconectar();
-            }
-        } catch (Exception e) {
-            System.out.println("error" + e);
-            //
-        }
-        return result;
-    }
-
-    public String loadListaFuncionarios(int codigoPractica) {
+    public String loadFuncionariosPorPractica(int codigoPractica) {
         String result = "{}";
         try {
             AccesoDatos accesoDatos = new AccesoDatos();
             if (accesoDatos.Connectar() == 2) {
                 FuncionariosAD FAD = new FuncionariosAD();
-                FAD.ListarFuncionariosPorPractica(accesoDatos, codigoPractica);
+                FAD.loadFuncionariosPorPractica(accesoDatos, codigoPractica);
                 Gson gson = new Gson();
                 result = gson.toJson(FAD);
                 /* 
@@ -57,44 +37,36 @@ public class FuncionarioLN {
         return result;
     }
 
-    public boolean InsertarFuncionario(String strCadenaJSON) {
-        boolean ret = false;
+    public int idFuncionarioExistentePracticaConvenio(int codigoPractica) {
+        int result = -1;
         try {
             AccesoDatos accesoDatos = new AccesoDatos();
             if (accesoDatos.Connectar() == 2) {
-                Gson gson = new Gson();
-                CFuncionarios result = gson.fromJson(strCadenaJSON, CFuncionarios.class);
-                FuncionariosAD fAD = new FuncionariosAD(result);
-                ret = fAD.guardarFuncionario(accesoDatos);
+                FuncionarioAD FAD = new FuncionarioAD();
+                result = FAD.idFuncionarioExistentePracticaConvenio(accesoDatos, codigoPractica);
                 accesoDatos.Desconectar();
             }
         } catch (Exception e) {
             System.out.println("error" + e);
+            //
         }
-        return ret;
+        return result;
     }
 
-    public boolean EliminarFuncionario(String strCadenaJSON) {
-        boolean ret = false;
+    public boolean actualizarAsignarFuncionario(int idPractica, int idFuncionario) {
+        boolean result = false;
         try {
-            String cadenaListaF = loadListaFuncionarios(1);
             AccesoDatos accesoDatos = new AccesoDatos();
             if (accesoDatos.Connectar() == 2) {
-                CFuncionarios result = new CFuncionarios();
-                Gson gson = new Gson();
-                result = gson.fromJson(strCadenaJSON, CFuncionarios.class);
-
-                CFuncionarios resultcadenaListaF = new CFuncionarios();
-                Gson gCadenaListaF = new Gson();
-                resultcadenaListaF = gCadenaListaF.fromJson(cadenaListaF, CFuncionarios.class);
-                FuncionarioAD _funcionarioADcadenaListaF = new FuncionarioAD();
-                ret = _funcionarioADcadenaListaF.eliminarFuncionarios(accesoDatos, result, resultcadenaListaF);
+                FuncionarioAD FAD = new FuncionarioAD();
+                result = FAD.actualizarAsignarFuncionario(accesoDatos, idPractica, idFuncionario);
                 accesoDatos.Desconectar();
             }
         } catch (Exception e) {
             System.out.println("error" + e);
+            //
         }
-        return ret;
+        return result;
     }
 
 }

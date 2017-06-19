@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 /**
  *
@@ -211,4 +212,40 @@ public class AccesoDatos {
     public Connection getCon() {
         return con;
     }
+
+    public void BeginTran() {
+        try {
+            if (this.con != null) {
+                con.setAutoCommit(false);
+            }
+        } catch (SQLException e) {
+            Logger log = Logger.getLogger(this.getClass().getName());
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void CommitTran() {
+        try {
+            if (this.con != null) {
+                this.con.commit();
+                con.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            Logger log = Logger.getLogger(this.getClass().getName());
+            log.severe(e.getMessage());
+        }
+    }
+
+    public void RollbackTran() {
+        try {
+            if (this.con != null) {
+                this.con.rollback();
+                con.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            Logger log = Logger.getLogger(this.getClass().getName());
+            log.severe(e.getMessage());
+        }
+    }
+
 }

@@ -13,11 +13,11 @@ import com.google.gson.Gson;
  */
 public class ConvenioLN {
 
-    public String loadConvenio(int idEntidad) {
+    public String loadConvenio(String codigo_unidad_academica) {
         String result = "{}";
         try {
             ConveniosAD conAD = new ConveniosAD();
-            conAD.loadConvenio(idEntidad);
+            conAD.loadConvenio(codigo_unidad_academica);
             Gson gson = new Gson();
             result = gson.toJson(conAD);
         } catch (Exception e) {

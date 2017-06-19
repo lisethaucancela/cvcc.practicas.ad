@@ -6,7 +6,14 @@
 package cvcc.practicas.ad.funciones.empresa;
 
 import cvcc.practicas.ad.conexion.AccesoDatos;
+import cvcc.practicas.ad.funciones.convenio.ConvenioAD;
+import cvcc.practicas.ad.sw.WSVinculacion.Convenio;
+import cvcc.practicas.ad.sw.swVinculacion;
+import cvcc.practicas.entidades.CDpa;
 import cvcc.practicas.entidades.CEmpresa;
+import cvcc.practicas.entidades.CFuncionario;
+import cvcc.practicas.entidades.CSectorEconomico;
+import cvcc.practicas.entidades.CTipoEmpresa;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,6 +22,9 @@ import java.sql.SQLException;
  * @author Liseth
  */
 public class EmpresaAD extends CEmpresa {
+
+    public EmpresaAD() {
+    }
 
     EmpresaAD(CEmpresa empresa) {
         this.setIdEmpresa(empresa.getIdEmpresa());
@@ -30,55 +40,59 @@ public class EmpresaAD extends CEmpresa {
         this.setTelefono(empresa.getTelefono());
     }
 
-    public void guardarEmpresa(AccesoDatos accesoDatos) {
+    public CEmpresa loadEmpresaPorPractica(AccesoDatos accesoDatos, int idPractica) throws Exception {
+        int idConvenio;
+        CEmpresa objEmpresa = new CEmpresa();
         try {
-            if (this.getIdEmpresa() < 0) {
-                this.insertarEmpresa(accesoDatos);
-            } else {
-                this.modificarEmpresa(accesoDatos);
-            }
+            //buscar por codigo de practica
+            ConvenioAD c = new ConvenioAD();
+            idConvenio = c.idConvenioPorPractica(accesoDatos, idPractica);
+            //carga la lista de funcioanrios
+            if (idConvenio != -1) {
+                //si es -1 significa que no hay un convenio asignado 
 
-        } catch (Exception ex) {
-            System.err.println("Error: " + ex.getMessage());
+                objEmpresa = loadEmpresaPorConvenio(accesoDatos, idConvenio);
+            }
+        } catch (Exception e) {
+            System.err.println("e: " + e.getMessage());
         }
+        return objEmpresa;
     }
 
-    public int insertarEmpresa(AccesoDatos accesoDatos) {
-        int result = 0;
-        String strSQL;
+    public CEmpresa loadEmpresaPorConvenio(AccesoDatos accesoDatos, int idConvenio) throws Exception {
+        //Listar los  empresas dependiendo de la empresa a 
+        //la que pertenece mediante el  codigo de prácticas
+        CEmpresa objEmpresa = new CEmpresa();
         try {
-            strSQL = " ";
-            if (accesoDatos.Connectar() == 2) {
-                if (accesoDatos.EjecutarUpdate_id(strSQL) == 1) {
-                    ResultSet rslDatos = accesoDatos.getRs();
-                    if (rslDatos.next()) {
-                        result = rslDatos.getInt(1);
-                    }
-                }
+            //buscar por codigo de practica
+            swVinculacion obj = new swVinculacion();
+            Convenio datosConvenio = obj.loadEmpresasPorConvenio(idConvenio);
+            if (datosConvenio.getObjEmpresa() != null) {
+
+                objEmpresa.setIdEmpresa(datosConvenio.getObjEmpresa().getIdEmpresa());
+                objEmpresa.setRuc(datosConvenio.getObjEmpresa().getRuc());
+                CTipoEmpresa objTE = new CTipoEmpresa();
+                objTE.setDescripcion(datosConvenio.getObjEmpresa().getObjTipoEmpresa().getDescripcion());
+                objEmpresa.setObjTipoEmpresa(objTE);
+                CSectorEconomico objSE = new CSectorEconomico();
+                objSE.setDescripcion(datosConvenio.getObjEmpresa().getObjSectorEconomico().getDescripcion());
+                objEmpresa.setObjSectorEconomico(objSE);
+                CDpa objDPA = new CDpa();
+                objDPA.setDescripcion(datosConvenio.getObjEmpresa().getObjDpa().getDescripcion());
+                objEmpresa.setObjDpa(objDPA);
+                objEmpresa.setRazonSocial(datosConvenio.getObjEmpresa().getRazonSocial());
+                objEmpresa.setDireccion(datosConvenio.getObjEmpresa().getDireccion());
+                objEmpresa.setTelefono(datosConvenio.getObjEmpresa().getTelefono());
+                objEmpresa.setDireccionWeb(datosConvenio.getObjEmpresa().getDireccionWeb());
+                objEmpresa.setEmail(datosConvenio.getObjEmpresa().getEmail());
+                objEmpresa.setActividades(datosConvenio.getObjEmpresa().getActividades());
+
             }
-        } catch (SQLException exConec) {
-            System.err.println("Error: " + exConec.getMessage());
+
+        } catch (Exception e) {
+            System.err.println("e: " + e.getMessage());
         }
-        return result;
+        return objEmpresa;
     }
 
-    public boolean modificarEmpresa(AccesoDatos accesoDatos) {
-        boolean result = false;
-        String strSQL;
-        try {
-            strSQL = "";
-            if (accesoDatos.Connectar() == 2) {
-                if (accesoDatos.EjecutarUpdate(strSQL) == 1) {
-                    /*  ResultSet rslDatos = accesoDatos.getRs();
-                     if (rslDatos.next()) {
-                     result = rslDatos.getBoolean(1);
-                     }*/
-                    result = true;
-                }
-            }
-        } catch (Exception exConec) {
-            System.err.println("Error: " + exConec.getMessage());
-        }
-        return result;
-    }
 }

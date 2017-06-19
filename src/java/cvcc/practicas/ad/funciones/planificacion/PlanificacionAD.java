@@ -20,6 +20,7 @@ public class PlanificacionAD extends CPlanificacion {
         this.setIdPlanificacion(planificacion.getIdPlanificacion());
         this.setFechaFin(planificacion.getFechaFin());
         this.setFechaInicio(planificacion.getFechaInicio());
+        this.setObjPractica(planificacion.getObjPractica());
     }
 
     public void guardarPlanificacion(AccesoDatos accesoDatos) {

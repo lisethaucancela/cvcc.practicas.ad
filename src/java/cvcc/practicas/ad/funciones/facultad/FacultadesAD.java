@@ -5,27 +5,18 @@
  */
 package cvcc.practicas.ad.funciones.facultad;
 
-import cvcc.practicas.ad.funciones.convenio.*;
 import cvcc.practicas.ad.sw.espoch.ArrayOfFacultad;
-import cvcc.practicas.ad.sw.espoch.Entidad;
-import cvcc.practicas.ad.sw.espoch.Convenio;
+
 import cvcc.practicas.ad.sw.espoch.Facultad;
 import cvcc.practicas.ad.sw.swServicioEspoch;
-import cvcc.practicas.entidades.CConvenio;
-import cvcc.practicas.entidades.CConvenios;
 import cvcc.practicas.entidades.CFacultad;
 import cvcc.practicas.entidades.CFacultades;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
  * @author Liseth
  */
 public class FacultadesAD extends CFacultades {
-    
-    
 
     public void loadFacultades() {
         ArrayOfFacultad arrayFacultades = swServicioEspoch.facultadesTotales();

@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://convenios/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://convenios/">
+
+<xs:element name="loadConvenios" type="tns:loadConvenios"/>
+
+<xs:element name="loadConveniosResponse" type="tns:loadConveniosResponse"/>
+
+<xs:element name="loadEmpresasPorConvenio" type="tns:loadEmpresasPorConvenio"/>
+
+<xs:element name="loadEmpresasPorConvenioResponse" type="tns:loadEmpresasPorConvenioResponse"/>
+
+<xs:element name="loadFuncionariosPorConvenio" type="tns:loadFuncionariosPorConvenio"/>
+
+<xs:element name="loadFuncionariosPorConvenioResponse" type="tns:loadFuncionariosPorConvenioResponse"/>
+
+<xs:element name="loadUnidadesAdministrativasPorConvenio" type="tns:loadUnidadesAdministrativasPorConvenio"/>
+
+<xs:element name="loadUnidadesAdministrativasPorConvenioResponse" type="tns:loadUnidadesAdministrativasPorConvenioResponse"/>
+
+<xs:complexType name="loadFuncionariosPorConvenio">
+<xs:sequence>
+<xs:element name="idConvenio" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadFuncionariosPorConvenioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:convenio" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="convenio">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="estado" type="xs:boolean"/>
+<xs:element name="fechaFin" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaInicio" type="xs:string" minOccurs="0"/>
+<xs:element name="idConvenio" type="xs:int"/>
+<xs:element name="objEmpresa" type="tns:cEmpresa" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cEmpresa">
+<xs:sequence>
+<xs:element name="actividades" type="xs:string" minOccurs="0"/>
+<xs:element name="direccion" type="xs:string" minOccurs="0"/>
+<xs:element name="direccionWeb" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="idEmpresa" type="xs:int"/>
+<xs:element name="listConvenios" type="tns:convenio" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listFuncionario" type="tns:funcionario" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="listUnidadAdministrativa" type="tns:unidadAdministrativa" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="objDpa" type="tns:cDpa" minOccurs="0"/>
+<xs:element name="objSectorEconomico" type="tns:cSectorEconomico" minOccurs="0"/>
+<xs:element name="objTipoEmpresa" type="tns:cTipoEmpresa" minOccurs="0"/>
+<xs:element name="razonSocial" type="xs:string" minOccurs="0"/>
+<xs:element name="ruc" type="xs:string" minOccurs="0"/>
+<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="funcionario">
+<xs:sequence>
+<xs:element name="apellidos" type="xs:string" minOccurs="0"/>
+<xs:element name="cargo" type="xs:string" minOccurs="0"/>
+<xs:element name="cedula" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="estado" type="xs:boolean"/>
+<xs:element name="idFuncionario" type="xs:long"/>
+<xs:element name="nombres" type="xs:string" minOccurs="0"/>
+<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="unidadAdministrativa">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cDpa">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idDpa" type="xs:int"/>
+<xs:element name="objPadre" type="tns:cDpa" minOccurs="0"/>
+<xs:element name="objTipoDpa" type="tns:cTipoDpa" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cTipoDpa">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idTipoDpa" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cSectorEconomico">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idSectorEconomico" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cTipoEmpresa">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idTipoEmpresa" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadEmpresasPorConvenio">
+<xs:sequence>
+<xs:element name="idConvenio" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadEmpresasPorConvenioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:convenio" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadConvenios">
+<xs:sequence>
+<xs:element name="codigo_unidad_academica" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadConveniosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:entidad" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="entidad">
+<xs:sequence>
+<xs:element name="codigo" type="xs:string" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idEntidad" type="xs:int"/>
+<xs:element name="listConvenios" type="tns:convenio" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="objPadre" type="tns:entidad" minOccurs="0"/>
+<xs:element name="objTipoEntidad" type="tns:cTipoEntidad" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cTipoEntidad">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="idTipoEntidad" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadUnidadesAdministrativasPorConvenio">
+<xs:sequence>
+<xs:element name="idConvenio" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadUnidadesAdministrativasPorConvenioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:convenio" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,6 +36,7 @@ public class PracticasLN {
     }
 
     public String loadListarPracticas(String codigoEntidad) {
+        //secretaria
         String result = "{}";
         try {
             AccesoDatos accesoDatos = new AccesoDatos();
@@ -50,6 +52,7 @@ public class PracticasLN {
         }
         return result;
     }
+   
 
     public String loadPracticasPorUsuario(String usuario) {
         String result = "{}";
@@ -122,7 +125,7 @@ public class PracticasLN {
     }
 
     /*      ---     PLANIFICACIONES       ---*/
-    public String loadPlanificaciones(int id_practica) {
+     public String loadPlanificaciones(int id_practica) {
         String result = "{}";
         try {
             AccesoDatos accesoDatos = new AccesoDatos();
@@ -146,7 +149,7 @@ public class PracticasLN {
         Gson gson = new Gson();
         try {
             CPractica practica = gson.fromJson(strCadenaJSON, CPractica.class);
-            
+
             PracticasAD PracticaAD = new PracticasAD(practica);
             if (accesoDatos.Connectar() == 2) {
                 PracticaAD.guardarPlanificaciones(accesoDatos);

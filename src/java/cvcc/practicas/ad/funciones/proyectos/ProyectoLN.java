@@ -6,6 +6,7 @@
 package cvcc.practicas.ad.funciones.proyectos;
 
 import com.google.gson.Gson;
+import cvcc.practicas.ad.conexion.AccesoDatos;
 
 /**
  *
@@ -13,11 +14,11 @@ import com.google.gson.Gson;
  */
 public class ProyectoLN {
 
-    public String loadLProyectos() {
+    public String loadListaProyectosPorEntidad(String codidoEntidad) {
         String result = "{}";
         try {
             ProyectosAD FAD = new ProyectosAD();
-            FAD.loadLProyectos();
+            FAD.loadListaProyectosPorEntidad(codidoEntidad);
 
             Gson gson = new Gson();
             result = gson.toJson(FAD);
@@ -27,4 +28,35 @@ public class ProyectoLN {
         }
         return result;
     }
+
+    public String guardarProyectoEstudiante(int idPractica, int idProyecto) {
+        String result = "{}";
+        try {
+            ProyectoAD FAD = new ProyectoAD();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            if (accesoDatos.Connectar() == 2) {
+                result = FAD.guardarProyectoEstudiante(accesoDatos, idPractica, idProyecto);
+            }
+
+        } catch (Exception e) {
+            System.out.println("error: " + e.getMessage());
+        }
+        return result;
+    }
+
+    public int codigoProyectoAsignado(int idPractica) {
+        int result = -1;
+        try {
+            ProyectoAD FAD = new ProyectoAD();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            if (accesoDatos.Connectar() == 2) {
+                result = FAD.codigoProyectoAsignado(accesoDatos, idPractica);
+            }
+
+        } catch (Exception e) {
+            System.out.println("error: " + e.getMessage());
+        }
+        return result;
+    }
+
 }

@@ -9,10 +9,12 @@ import cvcc.practicas.ad.conexion.AccesoDatos;
 import cvcc.practicas.ad.funciones.objetivo.ObjetivoAD;
 import cvcc.practicas.ad.funciones.periodo.PeriodoAD;
 import cvcc.practicas.ad.funciones.planificacion.PlanificacionAD;
+import cvcc.practicas.ad.sw.espoch.Persona;
+import cvcc.practicas.ad.sw.swServicioEspoch;
 import cvcc.practicas.entidades.CObjetivo;
-import cvcc.practicas.entidades.CPeriodo;
 import cvcc.practicas.entidades.CPlanificacion;
 import cvcc.practicas.entidades.CPractica;
+import cvcc.practicas.entidades.CUsuario;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +39,7 @@ public class PracticasAD extends CPractica {
                 this.setObjUsuario(practicas.getObjUsuario());
                 this.setObjFuncionario(practicas.getObjFuncionario());
                 this.setObjEmpresa(practicas.getObjEmpresa());
+                this.setLstTutores(practicas.getLstTutores());
                 if (practicas.getListObjetivos() != null) {
                     for (CObjetivo objetivo : practicas.getListObjetivos()) {
                         ObjetivoAD ObjetivoAD = new ObjetivoAD(objetivo);
@@ -70,8 +73,8 @@ public class PracticasAD extends CPractica {
         try {
             if (accesoDatos.Connectar() == 2) {
                 strSQL1 = "INSERT INTO practicas.practica(id_modalidad, id_estado_practica, descripcion)\n"
-                        + "		VALUES ('" + this.getObjModalidad().getIdModalidad() + "', '" + 1 + "', '" + this.getDescripcion() + "') \n"
-                        + "		RETURNING  id_practica;";
+                   + "		VALUES ('" + this.getObjModalidad().getIdModalidad() + "', '" + 1 + "', '" + this.getDescripcion() + "') \n"
+                   + "		RETURNING  id_practica;";
                 if (accesoDatos.EjecutarSQL(strSQL1) == 1) {
                     rslDatos = accesoDatos.getRs();
                     if (rslDatos.next()) {
@@ -80,7 +83,7 @@ public class PracticasAD extends CPractica {
                 }
                 if (id_practica > 0) {
                     strSQL2 = "INSERT INTO practicas.usuario_entidad_rol_practica(id_usuario_entidad_rol, id_practica)\n"
-                            + "		VALUES ('" + user_ent_rol + "', '" + id_practica + "') RETURNING  id_usuario_entidad_rol_practica";
+                       + "		VALUES ('" + user_ent_rol + "', '" + id_practica + "') RETURNING  id_usuario_entidad_rol_practica";
                     if (accesoDatos.EjecutarSQL(strSQL2) == 1) {
                         rslDatos = accesoDatos.getRs();
                         if (rslDatos.next()) {
@@ -103,10 +106,10 @@ public class PracticasAD extends CPractica {
         String strSQL;
         try {
             strSQL = "UPDATE practicas.practica\n"
-                    + "   SET id_modalidad='" + this.getObjModalidad().getIdModalidad() + "', \n"
-                    + "id_estado_practica='" + this.getObjEstadoPractica().getIdEstadoPractica() + "', \n"
-                    + "descripcion='" + this.getDescripcion() + "'\n"
-                    + " WHERE id_practica='" + this.getIdPractica() + "';";
+               + "   SET id_modalidad='" + this.getObjModalidad().getIdModalidad() + "', \n"
+               + "id_estado_practica='" + this.getObjEstadoPractica().getIdEstadoPractica() + "', \n"
+               + "descripcion='" + this.getDescripcion() + "'\n"
+               + " WHERE id_practica='" + this.getIdPractica() + "';";
             if (accesoDatos.Connectar() == 2) {
                 if (accesoDatos.EjecutarUpdate(strSQL) == 1) {
                     ResultSet rslDatos = accesoDatos.getRs();
@@ -165,15 +168,15 @@ public class PracticasAD extends CPractica {
     public void loadPlanificaciones(AccesoDatos accesoDatos) {
         try {
             String strSQL = "SELECT id_planificacion, id_practica, fecha_ini, fecha_fin, horas_planificadas\n"
-                    + "  FROM practicas.planificacion WHERE id_practica='" + this.getIdPractica() + "';";
+               + "  FROM practicas.planificacion WHERE id_practica='" + this.getIdPractica() + "';";
             if (accesoDatos.Connectar() == 2) {
                 if (accesoDatos.EjecutarSQL(strSQL) == 1) {
                     ResultSet rslObjetivos = accesoDatos.getRs();
                     while (rslObjetivos.next()) {
                         CPlanificacion objPlanificacion = new CPlanificacion();
                         objPlanificacion.setIdPlanificacion(rslObjetivos.getInt("id_planificacion"));
-                        objPlanificacion.setFechaInicio(rslObjetivos.getDate("fecha_ini"));
-                        objPlanificacion.setFechaFin(rslObjetivos.getDate("fecha_fin"));
+                        objPlanificacion.setFechaInicio(rslObjetivos.getString("fecha_ini"));
+                        objPlanificacion.setFechaFin(rslObjetivos.getString("fecha_fin"));
                         this.addPlanificaciones(objPlanificacion);
                     }
                 }
@@ -201,15 +204,15 @@ public class PracticasAD extends CPractica {
     public void loadPeriodos(AccesoDatos accesoDatos) {
         try {
             String strSQL = "SELECT 	practica_periodo.id_practica_periodo, practica_periodo.id_periodo, practica_periodo.fecha, periodo.codigo\n"
-                    + "     FROM   	practicas.practica_periodo, practicas.periodo\n"
-                    + "     WHERE 	practica_periodo.id_practica = '" + this.getIdPractica() + "' AND\n"
-                    + "                 practica_periodo.id_periodo = periodo.id_periodo;\n";
+               + "     FROM   	practicas.practica_periodo, practicas.periodo\n"
+               + "     WHERE 	practica_periodo.id_practica = '" + this.getIdPractica() + "' AND\n"
+               + "                 practica_periodo.id_periodo = periodo.id_periodo;\n";
             if (accesoDatos.Connectar() == 2) {
                 if (accesoDatos.EjecutarSQL(strSQL) == 1) {
                     ResultSet rslDatos = accesoDatos.getRs();
                     while (rslDatos.next()) {
                         PeriodoAD objPeriodoAD = new PeriodoAD();
-                        
+
                         objPeriodoAD.setFecha(rslDatos.getDate("fecha"));
                         objPeriodoAD.setCodigo(rslDatos.getString("codigo"));
 
@@ -228,7 +231,6 @@ public class PracticasAD extends CPractica {
      * TUTORES    
      * ************************************************************************/
     public String insertarTutor(AccesoDatos accesoDatos, String cedulaTutor, String idPractica, int entidad) throws Exception {
-        //muestra lista de practicas mediante el codigoEntidad de la secretaria de la escuela 
         String res = "";
         try {
             //anular el tutor anterior
@@ -246,7 +248,7 @@ public class PracticasAD extends CPractica {
             //si existe ya no 
             if (!verificarTutor(accesoDatos, id_usuario_entidad_rol, Integer.parseInt(idPractica))) {
                 String strSQL = " INSERT INTO practicas.usuario_entidad_rol_practica(id_usuario_entidad_rol, id_practica,estado)"
-                        + " VALUES ('" + id_usuario_entidad_rol + "','" + Integer.parseInt(idPractica) + "',TRUE)returning id_usuario_entidad_rol_practica \n";
+                   + " VALUES ('" + id_usuario_entidad_rol + "','" + Integer.parseInt(idPractica) + "',TRUE)returning id_usuario_entidad_rol_practica \n";
 
                 if (accesoDatos.EjecutarSQL(strSQL) == 1) {
                     ResultSet rslCodigoEmpresa = accesoDatos.getRs();
@@ -280,14 +282,15 @@ public class PracticasAD extends CPractica {
     public int idUsuarioEntidadRolPractica(AccesoDatos accesoDatos, int idPractica) throws SQLException {
         int idUsuarioEntidadRolPractica = -1;
         String strSQL = "SELECT \n"
-                + "  usuario_entidad_rol_practica.id_usuario_entidad_rol_practica \n"
-                + "FROM \n"
-                + "  practicas.usuario_entidad_rol_practica, \n"
-                + "  practicas.usuario_entidad_rol\n"
-                + "WHERE \n"
-                + "  usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND\n"
-                + "  usuario_entidad_rol.id_usuario_entidad_rol = usuario_entidad_rol_practica.id_usuario_entidad_rol AND\n"
-                + "  usuario_entidad_rol.id_rol!='" + 1 + "';";
+           + "  usuario_entidad_rol_practica.id_usuario_entidad_rol_practica \n"
+           + "FROM \n"
+           + "  practicas.usuario_entidad_rol_practica, \n"
+           + "  practicas.usuario_entidad_rol\n"
+           + "WHERE \n"
+           + "  usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND "
+           + " usuario_entidad_rol_practica.estado=true AND"
+           + "  usuario_entidad_rol.id_usuario_entidad_rol = usuario_entidad_rol_practica.id_usuario_entidad_rol AND\n"
+           + "  usuario_entidad_rol.id_rol!='" + 1 + "';";
 
         if (accesoDatos.EjecutarSQL(strSQL) == 1) {
             ResultSet rslCodigoEmpresa = accesoDatos.getRs();
@@ -302,9 +305,9 @@ public class PracticasAD extends CPractica {
     public boolean deshabilitarIdUsuarioEntidadRolPractica(AccesoDatos accesoDatos, int idUsuarioEntidadRolPractica) throws SQLException {
         boolean res = false;
         String strSQL = "UPDATE practicas.usuario_entidad_rol_practica\n"
-                + "             SET estado=FALSE\n"
-                + "     WHERE usuario_entidad_rol_practica.id_usuario_entidad_rol_practica='" + idUsuarioEntidadRolPractica + "';";
-        if (accesoDatos.EjecutarSQL(strSQL) == 1) {
+           + "             SET estado=FALSE\n"
+           + "     WHERE usuario_entidad_rol_practica.id_usuario_entidad_rol_practica='" + idUsuarioEntidadRolPractica + "';";
+        if (accesoDatos.EjecutarSQL(strSQL) != 1) { //revisar insertar datos
             res = true;
         }
         return res;
@@ -313,8 +316,8 @@ public class PracticasAD extends CPractica {
     public boolean verificarTutor(AccesoDatos accesoDatos, int idUsuarioEntidadRol, int idPractica) throws SQLException {
         boolean res = false;
         String strSQL = " SELECT id_usuario_entidad_rol_practica "
-                + "FROM practicas.usuario_entidad_rol_practica "
-                + " where id_usuario_entidad_rol = '" + idUsuarioEntidadRol + "' AND id_practica = '" + idPractica + "';";
+           + "FROM practicas.usuario_entidad_rol_practica "
+           + " where id_usuario_entidad_rol = '" + idUsuarioEntidadRol + "' AND id_practica = '" + idPractica + "';";
         if (accesoDatos.EjecutarSQL(strSQL) == 1) {
             ResultSet rslCodigoEmpresa = accesoDatos.getRs();
             while (rslCodigoEmpresa.next()) {
@@ -330,15 +333,15 @@ public class PracticasAD extends CPractica {
     public int id_usuario_entidad_rol(AccesoDatos accesoDatos, String cedulaTutor) throws SQLException {
         int id = 0;
         String strSQL = "SELECT \n"
-                + "  usuario_entidad_rol.id_usuario_entidad_rol\n"
-                + "FROM \n"
-                + "  practicas.usuario, \n"
-                + "  practicas.usuario_entidad_rol, \n"
-                + "  practicas.usuario_entidad\n"
-                + "WHERE \n"
-                + "usuario.cedula='" + cedulaTutor + "' AND\n"
-                + "  usuario.id_usuario = usuario_entidad.id_usuario AND\n"
-                + "  usuario_entidad.id_usuario_entidad = usuario_entidad_rol.id_usuario_entidad ";
+           + "  usuario_entidad_rol.id_usuario_entidad_rol\n"
+           + "FROM \n"
+           + "  practicas.usuario, \n"
+           + "  practicas.usuario_entidad_rol, \n"
+           + "  practicas.usuario_entidad\n"
+           + "WHERE \n"
+           + "usuario.cedula='" + cedulaTutor + "' AND\n"
+           + "  usuario.id_usuario = usuario_entidad.id_usuario AND\n"
+           + "  usuario_entidad.id_usuario_entidad = usuario_entidad_rol.id_usuario_entidad ";
 
         if (accesoDatos.EjecutarSQL(strSQL) == 1) {
             ResultSet rslCodigoEmpresa = accesoDatos.getRs();
@@ -376,5 +379,66 @@ public class PracticasAD extends CPractica {
         }
         return id;
     }
+///************************************************************
+    //**********  usuarios por practica
+/*
+    public void ListaTutoresPractica(AccesoDatos accesoDatos, int idPractica) {
+        //lista los estudiantes pertenecientes a una práctica
+        String cedula = "";
+        // List<CUsuario> objU = new ArrayList<>();
+        try {
+            String strSQL = "SELECT "
+               + "usuario_entidad_rol_practica.id_practica, "
+               + "usuario.cedula, "
+               + "usuario_entidad_rol_practica.estado"
+               + "     FROM "
+               + "practicas.usuario_entidad_rol_practica, "
+               + "practicas.usuario_entidad_rol, "
+               + "practicas.usuario_entidad, "
+               + "practicas.usuario"
+               + "     WHERE "
+               + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND  "
+               //+ "usuario_entidad_rol_practica.estado=true AND "
+               + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
+               + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
+               + "usuario_entidad_rol.id_rol!='" + 1 + "' AND "
+               + "usuario_entidad.id_usuario = usuario.id_usuario;";
 
+            if (accesoDatos.EjecutarSQL(strSQL) == 1) {
+                ResultSet rslCedula = accesoDatos.getRs();
+                while (rslCedula.next()) {
+                    cedula = rslCedula.getString(2);
+                    boolean estado = rslCedula.getBoolean(3);
+
+                    CUsuario objUsuario = new CUsuario();
+                    SWDatosUsuario("EIS", cedula, estado);
+                    //objUsuario = SWDatosUsuario("EIS", cedula, estado);
+                    // addUsuario(objUsuario);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("e: " + e.getMessage());
+        }
+        // return objU;
+    }
+
+    public void SWDatosUsuario(String codCarrera, String cedula, boolean estado) {
+        //obtiene los datos de un usuario del servicio web ya sea docente o estudiante
+        CUsuario objUsuario = new CUsuario();
+        swServicioEspoch o = new swServicioEspoch();
+        Persona oPersona = o.datosUsuarioCarrera(codCarrera, cedula);//servicio web 
+        //consumo de datos del estudiante del servicio web y asigno en el objeto 
+        objUsuario.setCedula(oPersona.getCedula());
+        objUsuario.setNombres(oPersona.getNombres());
+        objUsuario.setApellidos(oPersona.getApellidos());
+        if (oPersona.getEmail().equals("")) {
+            objUsuario.setEmail("ninguno");
+        } else {
+            objUsuario.setEmail(oPersona.getEmail());
+        }
+        objUsuario.setEstado(estado);
+        // return objUsuario;
+        addUsuario(objUsuario);
+    }
+*/
 }

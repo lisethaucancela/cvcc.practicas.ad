@@ -5,15 +5,15 @@
  */
 package cvcc.practicas.ad.funciones.proyectos;
 
-import cvcc.practicas.ad.sw.proyectosInvestigacion.SwCProyectoss;
 import cvcc.practicas.ad.sw.swProyectosInvestigacion;
+import cvcc.practicas.entidades.CInstitucionEjecutora;
 import cvcc.practicas.entidades.CProyectos;
 import cvcc.practicas.entidades.CProyectoss;
-
 
 import java.util.List;
 
 import java.util.ArrayList;
+import cvcc.practicas.ad.sw.WSProyectosInvestigacion.SwCProyectoss;
 
 /**
  *
@@ -21,11 +21,11 @@ import java.util.ArrayList;
  */
 public class ProyectosAD extends CProyectoss {
 
-    public void loadLProyectos() throws Exception {
+    public void loadListaProyectosPorEntidad(String codidoEntidad) throws Exception {
         //carga datos de los proyectos de investigación de la espoch (consumo de servicios web)
         swProyectosInvestigacion sw = new swProyectosInvestigacion();
 
-        SwCProyectoss lstProyectoss = sw.loadListaProyectos();
+        SwCProyectoss lstProyectoss = sw.loadListaProyectosPorEntidad(codidoEntidad);
         for (int i = 0; i < lstProyectoss.getProyectos().size(); i++) {
             CProyectos objProyecto = new CProyectos();
             objProyecto.setId(lstProyectoss.getProyectos().get(i).getId());
@@ -39,12 +39,16 @@ public class ProyectosAD extends CProyectoss {
             objProyecto.setNombreInvestigadorRresponsable(lstProyectoss.getProyectos().get(i).getObjUsuario().getNombresApellidos());
 
             //lista de instituciones
-            List<String> lstIE = new ArrayList<>();
+            List<CInstitucionEjecutora> lstIE = new ArrayList<>();
+
             for (int j = 0; j < lstProyectoss.getProyectos().get(i).getLstInstitucionEjecutora().size(); j++) {
-                String IE = lstProyectoss.getProyectos().get(i).getLstInstitucionEjecutora().get(j).getDescripcion();
-                lstIE.add(IE);
+                CInstitucionEjecutora obj = new CInstitucionEjecutora();
+                obj.setId(lstProyectoss.getProyectos().get(i).getLstInstitucionEjecutora().get(j).getId());
+                obj.setDescripcion(lstProyectoss.getProyectos().get(i).getLstInstitucionEjecutora().get(j).getDescripcion());
+                obj.setCodigo(lstProyectoss.getProyectos().get(i).getLstInstitucionEjecutora().get(j).getCodigo());
+                lstIE.add(obj);
             }
-            objProyecto.setNombreInstitucionEjecutora(lstIE);
+            objProyecto.setLstInstitucionesEjecutoras(lstIE);
 
             // añadir el nombre del usuario 
             //hay que revisar más servicios de funcionarios
@@ -52,6 +56,8 @@ public class ProyectosAD extends CProyectoss {
             //**** INSTITUCIONES EJECUTORAS
             getProyectos().add(objProyecto);
         }
+        
 
     }
+
 }

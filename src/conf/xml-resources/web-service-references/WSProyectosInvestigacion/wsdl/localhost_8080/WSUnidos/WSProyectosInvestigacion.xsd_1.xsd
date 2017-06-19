@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://proyectoInvestigacion/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://proyectoInvestigacion/">
+
+<xs:element name="loadListaInstitucionesEjecutorasPorProyecto" type="tns:loadListaInstitucionesEjecutorasPorProyecto"/>
+
+<xs:element name="loadListaInstitucionesEjecutorasPorProyectoResponse" type="tns:loadListaInstitucionesEjecutorasPorProyectoResponse"/>
+
+<xs:element name="loadListaProyectosPorEntidad" type="tns:loadListaProyectosPorEntidad"/>
+
+<xs:element name="loadListaProyectosPorEntidadResponse" type="tns:loadListaProyectosPorEntidadResponse"/>
+
+<xs:complexType name="loadListaProyectosPorEntidad">
+<xs:sequence>
+<xs:element name="codidoEntidad" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadListaProyectosPorEntidadResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:swCProyectoss" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCProyectoss">
+<xs:sequence>
+<xs:element name="proyectos" type="tns:swCProyectos" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCProyectos">
+<xs:sequence>
+<xs:element name="fecha_fin" type="xs:string" minOccurs="0"/>
+<xs:element name="fecha_inicio" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="lstInstitucionEjecutora" type="tns:swCInstitucionEjecutora" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="objEstadoProyecto" type="tns:swCEstadoProyecto" minOccurs="0"/>
+<xs:element name="objTipoInvestigacion" type="tns:swCTipoInvestigacion" minOccurs="0"/>
+<xs:element name="objTipoProyecto" type="tns:swCTipoProyecto" minOccurs="0"/>
+<xs:element name="objUsuario" type="tns:swCUsuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCInstitucionEjecutora">
+<xs:sequence>
+<xs:element name="codigo" type="xs:string" minOccurs="0"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCEstadoProyecto">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCTipoInvestigacion">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCTipoProyecto">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="swCUsuario">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="nombresApellidos" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadListaInstitucionesEjecutorasPorProyecto">
+<xs:sequence>
+<xs:element name="idPractica" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loadListaInstitucionesEjecutorasPorProyectoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:swCInstitucionEjecutora" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

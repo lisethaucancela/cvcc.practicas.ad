@@ -5,7 +5,7 @@
  */
 package cvcc.practicas.ad.sw;
 
-import cvcc.practicas.ad.sw.proyectosInvestigacion.SwCProyectoss;
+import cvcc.practicas.ad.sw.WSProyectosInvestigacion.SwCProyectoss;
 
 /**
  *
@@ -13,10 +13,16 @@ import cvcc.practicas.ad.sw.proyectosInvestigacion.SwCProyectoss;
  */
 public class swProyectosInvestigacion {
 
-    public SwCProyectoss loadListaProyectos() {
-        cvcc.practicas.ad.sw.proyectosInvestigacion.ProyectosInvestigacion_Service service = new cvcc.practicas.ad.sw.proyectosInvestigacion.ProyectosInvestigacion_Service();
-        cvcc.practicas.ad.sw.proyectosInvestigacion.ProyectosInvestigacion port = service.getProyectosInvestigacionPort();
-        return port.loadListaProyectos();
+    public java.util.List<cvcc.practicas.ad.sw.WSProyectosInvestigacion.SwCInstitucionEjecutora> loadListaInstitucionesEjecutorasPorProyecto(int idPractica) {
+        cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion_Service service = new cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion_Service();
+        cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion port = service.getWSProyectosInvestigacionPort();
+        return port.loadListaInstitucionesEjecutorasPorProyecto(idPractica);
+    }
+
+    public SwCProyectoss loadListaProyectosPorEntidad(java.lang.String codidoEntidad) {
+        cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion_Service service = new cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion_Service();
+        cvcc.practicas.ad.sw.WSProyectosInvestigacion.WSProyectosInvestigacion port = service.getWSProyectosInvestigacionPort();
+        return port.loadListaProyectosPorEntidad(codidoEntidad);
     }
 
 }

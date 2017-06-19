@@ -5,14 +5,6 @@
  */
 package cvcc.practicas.ad.funciones.practicas;
 
-import cvcc.practicas.ad.conexion.AccesoDatos;
-import cvcc.practicas.ad.funciones.usuario.UsuarioLN;
-import cvcc.practicas.ad.funciones.usuario.UsuariosAD;
-import cvcc.practicas.entidades.CUsuario;
-import cvcc.practicas.entidades.CUsuarios;
-import java.util.List;
-import com.google.gson.Gson;
-
 /**
  *
  * @author Paola_Cajilema
@@ -21,8 +13,14 @@ public class prueba {
 
     public static void main(String[] args) throws Exception {
         PracticasLN obj = new PracticasLN();
-    String cadena = obj.loadListarPracticas("1");
-//        System.out.println(cadena);
+        //String x=obj.guardarProyectoEstudiante(1, 1);
+        //String x=obj.loadListaProyectosPorEntidad("FIE");
+        // String x = obj.loadObjetivos(1);
+      
+        /*PracticasLN obj = new PracticasLN();
+         String cadena = obj.loadListarPracticas("IS1615");
+         System.out.println(cadena);
+         */
         //      UsuarioLN obj = new UsuarioLN();
         //AccesoDatos accesoDatos = new AccesoDatos();
 //        String strCadena = obj.loadListadoDocentesPorEscuela("EIS");
@@ -35,7 +33,7 @@ public class prueba {
 //        for (int i = 0; i < UsAD.getUsuarios().size(); i++) {
 //            System.out.println(" " + UsAD.getUsuarios().get(i).getCedula() + " \t" + UsAD.getUsuarios().get(i).getNombres() + "  " + UsAD.getUsuarios().get(i).getApellidos() + " \t" + UsAD.getUsuarios().get(i).getEmail() + " \t" + UsAD.getUsuarios().get(i).getNumeroPractica());
 //        }
-        obj.insertarTutor("1234567895", "4", 3);
+          obj.insertarTutor("060304716-8", "3", 3);
     }
 
 }

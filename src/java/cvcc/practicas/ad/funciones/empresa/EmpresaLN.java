@@ -7,6 +7,8 @@ package cvcc.practicas.ad.funciones.empresa;
 
 import com.google.gson.Gson;
 import cvcc.practicas.ad.conexion.AccesoDatos;
+import cvcc.practicas.entidades.CEmpresa;
+
 import cvcc.practicas.entidades.CEmpresas;
 
 /**
@@ -14,6 +16,25 @@ import cvcc.practicas.entidades.CEmpresas;
  * @author Liseth
  */
 public class EmpresaLN {
+
+    public String loadEmpresaPorPractica(int idPractica) {
+        String result = "{}";
+        try {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            if (accesoDatos.Connectar() == 2) {
+                EmpresaAD FAD = new EmpresaAD();
+                CEmpresa obj = new CEmpresa();
+                obj = FAD.loadEmpresaPorPractica(accesoDatos, idPractica);
+                Gson gson = new Gson();
+                result = gson.toJson(obj);
+                accesoDatos.Desconectar();
+            }
+        } catch (Exception e) {
+            System.out.println("error" + e);
+            //
+        }
+        return result;
+    }
 
     public String loadEmpresas() {
         String result = "{}";
@@ -31,21 +52,4 @@ public class EmpresaLN {
         return result;
     }
 
-    public String guardarEmpresas(String strCadenaJSON) {
-        String result = "DATOS NO INGRESADOS";
-        try {
-            Gson gson = new Gson();
-            CEmpresas listaEmpresas = gson.fromJson(strCadenaJSON, CEmpresas.class);
-            EmpresasAD empresasAD = new EmpresasAD(listaEmpresas);
-            AccesoDatos accesoDatos = new AccesoDatos();
-            if (accesoDatos.Connectar() == 2) {
-                empresasAD.guardarEmpresas(accesoDatos);
-                result = "DATOS INGRESADOS";
-            }
-            accesoDatos.Desconectar();
-        } catch (Exception e) {
-            System.out.println("error" + e);
-        }
-        return result;
-    }
 }

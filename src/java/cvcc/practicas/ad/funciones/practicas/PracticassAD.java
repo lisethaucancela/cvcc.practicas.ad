@@ -46,37 +46,37 @@ public class PracticassAD extends CPracticass {
         //muestra lista de practicas por cedula de usuario
         try {
             String strSQL = "SELECT  practica.id_practica, practica.descripcion,         \n"
-                    + "          modalidad.descripcion, estado_practica.descripcion  \n"
-                    + "    FROM  practicas.practica, practicas.usuario_entidad_rol_practica, \n"
-                    + "          practicas.estado_practica, practicas.modalidad, \n"
-                    + "          practicas.usuario_entidad_rol, practicas.usuario_entidad, \n"
-                    + "          practicas.usuario\n"
-                    + "    WHERE practica.id_modalidad = modalidad.id_modalidad AND\n"
-                    + "          usuario_entidad_rol_practica.id_practica = practica.id_practica AND\n"
-                    + "          estado_practica.id_estado_practica = practica.id_estado_practica AND\n"
-                    + "          usuario_entidad_rol.id_usuario_entidad_rol = usuario_entidad_rol_practica.id_usuario_entidad_rol AND\n"
-                    + "          usuario_entidad.id_usuario_entidad = usuario_entidad_rol.id_usuario_entidad AND\n"
-                    + "          usuario.id_usuario = usuario_entidad.id_usuario AND usuario.cedula='" + usuario + "' ;";
-            if (accesoDatos.Connectar() == 2) {
-                if (accesoDatos.EjecutarSQL(strSQL) == 1) {
-                    ResultSet rslDatosPracticas = accesoDatos.getRs();
-                    while (rslDatosPracticas.next()) {
-                        PracticasAD objPracticaAD = new PracticasAD();
-                        objPracticaAD.setIdPractica(rslDatosPracticas.getInt(1));
-                        objPracticaAD.setDescripcion(rslDatosPracticas.getString(2));
+               + "          modalidad.descripcion, estado_practica.descripcion  \n"
+               + "    FROM  practicas.practica, practicas.usuario_entidad_rol_practica, \n"
+               + "          practicas.estado_practica, practicas.modalidad, \n"
+               + "          practicas.usuario_entidad_rol, practicas.usuario_entidad, \n"
+               + "          practicas.usuario\n"
+               + "    WHERE practica.id_modalidad = modalidad.id_modalidad AND\n"
+               + "          usuario_entidad_rol_practica.id_practica = practica.id_practica AND\n"
+               + "          estado_practica.id_estado_practica = practica.id_estado_practica AND\n"
+               + "          usuario_entidad_rol.id_usuario_entidad_rol = usuario_entidad_rol_practica.id_usuario_entidad_rol AND\n"
+               + "          usuario_entidad.id_usuario_entidad = usuario_entidad_rol.id_usuario_entidad AND\n"
+               + "          usuario.id_usuario = usuario_entidad.id_usuario AND usuario.cedula='" + usuario + "' ;";
 
-                        CModalidad objModalidad = new CModalidad();
-                        objModalidad.setDescripcion(rslDatosPracticas.getString(3));
-                        objPracticaAD.setObjModalidad(objModalidad);
+            if (accesoDatos.EjecutarSQL(strSQL) == 1) {
+                ResultSet rslDatosPracticas = accesoDatos.getRs();
+                while (rslDatosPracticas.next()) {
+                    PracticasAD objPracticaAD = new PracticasAD();
+                    objPracticaAD.setIdPractica(rslDatosPracticas.getInt(1));
+                    objPracticaAD.setDescripcion(rslDatosPracticas.getString(2));
 
-                        CEstadoPractica objetoEstadoPractica = new CEstadoPractica();
-                        objetoEstadoPractica.setDescripcion(rslDatosPracticas.getString(4));
-                        objPracticaAD.setObjEstadoPractica(objetoEstadoPractica);
-                        
-                        objPracticaAD.loadPeriodos(accesoDatos);
+                    CModalidad objModalidad = new CModalidad();
+                    objModalidad.setDescripcion(rslDatosPracticas.getString(3));
+                    objPracticaAD.setObjModalidad(objModalidad);
 
-                        this.addPracticas(objPracticaAD);
-                    }
+                    CEstadoPractica objetoEstadoPractica = new CEstadoPractica();
+                    objetoEstadoPractica.setDescripcion(rslDatosPracticas.getString(4));
+                    objPracticaAD.setObjEstadoPractica(objetoEstadoPractica);
+
+                    objPracticaAD.loadPeriodos(accesoDatos);
+
+                    this.addPracticas(objPracticaAD);
+
                 }
             }
         } catch (Exception e) {
@@ -88,61 +88,61 @@ public class PracticassAD extends CPracticass {
         //muestra lista de practicas mediante el codigoEntidad de la secretaria de la escuela 
         try {
             String strSQL = "SELECT "
-                    + "practica.id_practica,"
-                    + "practica.descripcion, "
-                    + "modalidad.descripcion,"
-                    + "periodo.codigo,"
-                    + "estado_practica.descripcion"
-                    + "     FROM "
-                    + "practicas.entidad,"
-                    + "practicas.usuario_entidad, "
-                    + "practicas.usuario_entidad_rol, "
-                    + "practicas.usuario_entidad_rol_practica, "
-                    + "practicas.practica, "
-                    + "practicas.modalidad, "
-                    + " practicas.practica_periodo, "
-                    + "practicas.periodo, "
-                    + "practicas.estado_practica"
-                    + "     WHERE "
-                    + "usuario_entidad.id_entidad = entidad.id_entidad AND "
-                    + "entidad.codigo_entidad='" + codigoEntidad + "'AND "
-                    + "usuario_entidad_rol.id_rol='" + 1 + "' AND "//código 1 de estudiante
-                    + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
-                    + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
-                    + "practica.id_practica = usuario_entidad_rol_practica.id_practica AND "
-                    + "practica.id_practica = practica_periodo.id_practica AND "
-                    + "practica.id_modalidad = modalidad.id_modalidad AND "
-                    + "practica.id_estado_practica = estado_practica.id_estado_practica AND "
-                    + "periodo.id_periodo = practica_periodo.id_periodo";
+               + "practica.id_practica,"
+               + "practica.descripcion, "
+               + "modalidad.descripcion,"
+               + "periodo.codigo,"
+               + "estado_practica.descripcion"
+               + "     FROM "
+               + "practicas.entidad,"
+               + "practicas.usuario_entidad, "
+               + "practicas.usuario_entidad_rol, "
+               + "practicas.usuario_entidad_rol_practica, "
+               + "practicas.practica, "
+               + "practicas.modalidad, "
+               + " practicas.practica_periodo, "
+               + "practicas.periodo, "
+               + "practicas.estado_practica"
+               + "     WHERE "
+               + "usuario_entidad.id_entidad = entidad.id_entidad AND "
+               + "entidad.codigo_entidad='" + codigoEntidad + "'AND "
+               + "usuario_entidad_rol.id_rol='" + 1 + "' AND "//código 1 de estudiante
+               + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
+               + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
+               + "practica.id_practica = usuario_entidad_rol_practica.id_practica AND "
+               + "practica.id_practica = practica_periodo.id_practica AND "
+               + "practica.id_modalidad = modalidad.id_modalidad AND "
+               + "practica.id_estado_practica = estado_practica.id_estado_practica AND "
+               + "periodo.id_periodo = practica_periodo.id_periodo";
 
             if (accesoDatos.EjecutarSQL(strSQL) == 1) {
-                ResultSet rslCodigoEmpresa = accesoDatos.getRs();
-                while (rslCodigoEmpresa.next()) {
+                ResultSet rslDatos = accesoDatos.getRs();
+                while (rslDatos.next()) {
 
                     CPractica objetoPractica = new CPractica();
-                    objetoPractica.setIdPractica(rslCodigoEmpresa.getInt(1));
-                    objetoPractica.setDescripcion(rslCodigoEmpresa.getString(2));
+                    objetoPractica.setIdPractica(rslDatos.getInt(1));
+                    objetoPractica.setDescripcion(rslDatos.getString(2));
 
                     CModalidad objModalidad = new CModalidad();//---
-                    objModalidad.setDescripcion(rslCodigoEmpresa.getString(3));
+                    objModalidad.setDescripcion(rslDatos.getString(3));
                     objetoPractica.setObjModalidad(objModalidad);
 
                     CPeriodo objPeriodo = new CPeriodo();//---
-                    objPeriodo.setCodigo(rslCodigoEmpresa.getString(4));
+                    objPeriodo.setCodigo(rslDatos.getString(4));
                     //String en el servicio web 
 
                     objetoPractica.setObjPeriodo(objPeriodo);
 
                     CEstadoPractica objetoEstadoPractica = new CEstadoPractica();//----
-                    objetoEstadoPractica.setDescripcion(rslCodigoEmpresa.getString(5));
+                    objetoEstadoPractica.setDescripcion(rslDatos.getString(5));
                     objetoPractica.setObjEstadoPractica(objetoEstadoPractica);
                     //Lista de estudiantes
                     CUsuario objEstudiante = new CUsuario();
-                    objEstudiante = DatosEstudiantePractica(accesoDatos, rslCodigoEmpresa.getInt(1));
+                    objEstudiante = DatosEstudiantePractica(accesoDatos, rslDatos.getInt(1));
                     objetoPractica.setObjUsuario(objEstudiante);
                     //Lista de docentes
                     List<CUsuario> objTutor = new ArrayList<>();
-                    objTutor = DatosDocentesPractica(accesoDatos, rslCodigoEmpresa.getInt(1));
+                    objTutor = DatosDocentesPractica(accesoDatos, rslDatos.getInt(1));
                     objetoPractica.setLstTutores(objTutor);
 
                     getPracticas().add(objetoPractica);
@@ -159,19 +159,19 @@ public class PracticassAD extends CPracticass {
         CUsuario objUsuario = new CUsuario();
         try {
             String strSQL = "SELECT "
-                    + "usuario_entidad_rol_practica.id_practica, "
-                    + "usuario.cedula"
-                    + "     FROM "
-                    + "practicas.usuario_entidad_rol_practica, "
-                    + "practicas.usuario_entidad_rol, "
-                    + "practicas.usuario_entidad, "
-                    + "practicas.usuario"
-                    + "     WHERE "
-                    + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND "
-                    + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
-                    + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
-                    + "usuario_entidad_rol.id_rol='" + 1 + "' AND "
-                    + "usuario_entidad.id_usuario = usuario.id_usuario;";
+               + "usuario_entidad_rol_practica.id_practica, "
+               + "usuario.cedula"
+               + "     FROM "
+               + "practicas.usuario_entidad_rol_practica, "
+               + "practicas.usuario_entidad_rol, "
+               + "practicas.usuario_entidad, "
+               + "practicas.usuario"
+               + "     WHERE "
+               + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND "
+               + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
+               + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
+               + "usuario_entidad_rol.id_rol='" + 1 + "' AND "
+               + "usuario_entidad.id_usuario = usuario.id_usuario;";
 
             if (accesoDatos.EjecutarSQL(strSQL) == 1) {
                 ResultSet rslCedula = accesoDatos.getRs();
@@ -211,20 +211,21 @@ public class PracticassAD extends CPracticass {
         List<CUsuario> objU = new ArrayList<>();
         try {
             String strSQL = "SELECT "
-                    + "usuario_entidad_rol_practica.id_practica, "
-                    + "usuario.cedula, "
-                    + "usuario_entidad_rol_practica.estado"
-                    + "     FROM "
-                    + "practicas.usuario_entidad_rol_practica, "
-                    + "practicas.usuario_entidad_rol, "
-                    + "practicas.usuario_entidad, "
-                    + "practicas.usuario"
-                    + "     WHERE "
-                    + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND "
-                    + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
-                    + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
-                    + "usuario_entidad_rol.id_rol!='" + 1 + "' AND "
-                    + "usuario_entidad.id_usuario = usuario.id_usuario;";
+               + "usuario_entidad_rol_practica.id_practica, "
+               + "usuario.cedula, "
+               + "usuario_entidad_rol_practica.estado"
+               + "     FROM "
+               + "practicas.usuario_entidad_rol_practica, "
+               + "practicas.usuario_entidad_rol, "
+               + "practicas.usuario_entidad, "
+               + "practicas.usuario"
+               + "     WHERE "
+               + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND  "
+               + "usuario_entidad_rol_practica.estado=true AND "
+               + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
+               + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
+               + "usuario_entidad_rol.id_rol!='" + 1 + "' AND "
+               + "usuario_entidad.id_usuario = usuario.id_usuario;";
 
             if (accesoDatos.EjecutarSQL(strSQL) == 1) {
                 ResultSet rslCedula = accesoDatos.getRs();

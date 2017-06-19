@@ -42,10 +42,10 @@
         </wsimport-option>
       </wsimport-options>
     </client>
-    <client name="proyectosInvestigacion">
-      <wsdl-url>http://localhost:8080/WSUnidos/proyectosInvestigacion?WSDL</wsdl-url>
-      <local-wsdl-file>localhost_8080/WSUnidos/proyectosInvestigacion.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">cvcc.practicas.ad.sw.proyectosInvestigacion</package-name>
+    <client name="WSProyectosInvestigacion">
+      <wsdl-url>http://localhost:8080/WSUnidos/WSProyectosInvestigacion?WSDL</wsdl-url>
+      <local-wsdl-file>localhost_8080/WSUnidos/WSProyectosInvestigacion.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">cvcc.practicas.ad.sw.WSProyectosInvestigacion</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -62,7 +62,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/WSUnidos/proyectosInvestigacion?WSDL</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/WSUnidos/WSProyectosInvestigacion?WSDL</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -74,7 +74,43 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>cvcc.practicas.ad.sw.proyectosInvestigacion</wsimport-option-value>
+          <wsimport-option-value>cvcc.practicas.ad.sw.WSProyectosInvestigacion</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+    <client name="WSVinculacion">
+      <wsdl-url>http://localhost:8080/WSUnidos/WSVinculacion?WSDL</wsdl-url>
+      <local-wsdl-file>localhost_8080/WSUnidos/WSVinculacion.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">cvcc.practicas.ad.sw.WSVinculacion</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>http://localhost:8080/WSUnidos/WSVinculacion?WSDL</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>package</wsimport-option-name>
+          <wsimport-option-value>cvcc.practicas.ad.sw.WSVinculacion</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

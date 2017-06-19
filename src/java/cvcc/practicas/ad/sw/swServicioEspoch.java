@@ -9,7 +9,6 @@ import cvcc.practicas.ad.sw.espoch.ArrayOfDictadoMateria;
 import cvcc.practicas.ad.sw.espoch.ArrayOfFacultad;
 import cvcc.practicas.ad.sw.espoch.ArrayOfMateriaPensum;
 import cvcc.practicas.ad.sw.espoch.ArrayOfPeriodo;
-import cvcc.practicas.ad.sw.espoch.Entidad;
 import cvcc.practicas.ad.sw.espoch.Persona;
 
 /**
@@ -41,6 +40,7 @@ public class swServicioEspoch {
         cvcc.practicas.ad.sw.espoch.WSservicioEspoch port = service.getWSservicioEspochPort();
         return port.datosPeriodo();
     }
+
     public static ArrayOfFacultad facultadesTotales() {
         cvcc.practicas.ad.sw.espoch.WSservicioEspoch_Service service = new cvcc.practicas.ad.sw.espoch.WSservicioEspoch_Service();
         cvcc.practicas.ad.sw.espoch.WSservicioEspoch port = service.getWSservicioEspochPort();
@@ -50,12 +50,5 @@ public class swServicioEspoch {
      *      Convenios SERVICIOS WEB VINCULACION
      * *************************************************************************/
 
-    public Entidad convenios(int idEntidad) {
-        cvcc.practicas.ad.sw.espoch.WSservicioEspoch_Service service = new cvcc.practicas.ad.sw.espoch.WSservicioEspoch_Service();
-        cvcc.practicas.ad.sw.espoch.WSservicioEspoch port = service.getWSservicioEspochPort();
-        return port.convenios(idEntidad);
-    }
-
-    
-
+   
 }

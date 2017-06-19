@@ -2,10 +2,6 @@
 
 <xs:import namespace="http://academico.espoch.edu.ec/" schemaLocation="http://localhost:8080/WSUnidos/WSservicioEspoch?xsd=2"/>
 
-<xs:element name="Convenios" type="tns:Convenios"/>
-
-<xs:element name="ConveniosResponse" type="tns:ConveniosResponse"/>
-
 <xs:element name="DatosPeriodo" type="tns:DatosPeriodo"/>
 
 <xs:element name="DatosPeriodoResponse" type="tns:DatosPeriodoResponse"/>
@@ -26,117 +22,45 @@
 
 <xs:element name="MallaCurricularPensumVigenteSinDescripcionResponse" type="tns:MallaCurricularPensumVigenteSinDescripcionResponse"/>
 
-<xs:complexType name="Convenios">
-<xs:sequence>
-<xs:element name="idEntidad" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="PeriodosAcademicos" type="tns:PeriodosAcademicos"/>
 
-<xs:complexType name="ConveniosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:entidad" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="PeriodosAcademicosResponse" type="tns:PeriodosAcademicosResponse"/>
 
-<xs:complexType name="entidad">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idEntidad" type="xs:int"/>
-<xs:element name="listConvenios" type="tns:convenio" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="objPadre" type="tns:entidad" minOccurs="0"/>
-<xs:element name="objTipoEntidad" type="tns:cTipoEntidad" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="hello" type="tns:hello"/>
 
-<xs:complexType name="convenio">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="estado" type="xs:boolean"/>
-<xs:element name="fechaFin" type="tns:date" minOccurs="0"/>
-<xs:element name="fechaInicio" type="tns:date" minOccurs="0"/>
-<xs:element name="idConvenio" type="xs:int"/>
-<xs:element name="objEmpresa" type="tns:cEmpresa" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
+<xs:element name="helloResponse" type="tns:helloResponse"/>
 
-<xs:complexType name="date">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="cEmpresa">
-<xs:sequence>
-<xs:element name="actividades" type="xs:string" minOccurs="0"/>
-<xs:element name="direccion" type="xs:string" minOccurs="0"/>
-<xs:element name="direccionWeb" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="idEmpresa" type="xs:int"/>
-<xs:element name="listConvenios" type="tns:convenio" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="objDpa" type="tns:cDpa" minOccurs="0"/>
-<xs:element name="objSectorEconomico" type="tns:cSectorEconomico" minOccurs="0"/>
-<xs:element name="objTipoEmpresa" type="tns:cTipoEmpresa" minOccurs="0"/>
-<xs:element name="razonSocial" type="xs:string" minOccurs="0"/>
-<xs:element name="ruc" type="xs:string" minOccurs="0"/>
-<xs:element name="telefono" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="cDpa">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idDpa" type="xs:int"/>
-<xs:element name="objPadre" type="tns:cDpa" minOccurs="0"/>
-<xs:element name="objTipoDpa" type="tns:cTipoDpa" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="cTipoDpa">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idTipoDpa" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="cSectorEconomico">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idSectorEconomico" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="cTipoEmpresa">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idTipoEmpresa" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="cTipoEntidad">
-<xs:sequence>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="idTipoEntidad" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DatosUsuarioCarrera">
+<xs:complexType name="MallaCurricularPensumVigenteSinDescripcion">
 <xs:sequence>
 <xs:element name="strCodCarrera" type="xs:string" minOccurs="0"/>
-<xs:element name="strCedula" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DatosUsuarioCarreraResponse">
+<xs:complexType name="MallaCurricularPensumVigenteSinDescripcionResponse">
 <xs:sequence>
-<xs:element name="return" type="ns1:Persona" minOccurs="0"/>
+<xs:element name="return" type="ns1:ArrayOfMateria_Pensum" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="FacultadesTotales">
+<xs:complexType name="PeriodosAcademicos">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="FacultadesTotalesResponse">
+<xs:complexType name="PeriodosAcademicosResponse">
 <xs:sequence>
-<xs:element name="return" type="ns1:ArrayOfFacultad" minOccurs="0"/>
+<xs:element name="return" type="ns1:ArrayOfPeriodo" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -147,6 +71,16 @@
 <xs:complexType name="DatosPeriodoResponse">
 <xs:sequence>
 <xs:element name="return" type="ns1:ArrayOfPeriodo" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FacultadesTotales">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="FacultadesTotalesResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:ArrayOfFacultad" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -163,15 +97,16 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="MallaCurricularPensumVigenteSinDescripcion">
+<xs:complexType name="DatosUsuarioCarrera">
 <xs:sequence>
 <xs:element name="strCodCarrera" type="xs:string" minOccurs="0"/>
+<xs:element name="strCedula" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="MallaCurricularPensumVigenteSinDescripcionResponse">
+<xs:complexType name="DatosUsuarioCarreraResponse">
 <xs:sequence>
-<xs:element name="return" type="ns1:ArrayOfMateria_Pensum" minOccurs="0"/>
+<xs:element name="return" type="ns1:Persona" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

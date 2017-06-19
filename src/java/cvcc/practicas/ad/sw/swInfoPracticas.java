@@ -6,18 +6,25 @@
 package cvcc.practicas.ad.sw;
 
 import cvcc.practicas.ad.funciones.empresa.EmpresaLN;
-import cvcc.practicas.ad.funciones.funcionario.FuncionarioLN;
 import cvcc.practicas.ad.funciones.modalidad.ModalidadLN;
 import cvcc.practicas.ad.funciones.practicas.PracticasLN;
 import cvcc.practicas.ad.funciones.usuario.UsuarioLN;
 import cvcc.practicas.ad.funciones.actividadplanificada.ActividadPlanificadaLN;
 import cvcc.practicas.ad.funciones.convenio.ConvenioLN;
 import cvcc.practicas.ad.funciones.entidad.EntidadLN;
+import cvcc.practicas.ad.funciones.evaluacionCualitativa.EvaluacionCualitativaLN;
 import cvcc.practicas.ad.funciones.facultad.FacultadLN;
+import cvcc.practicas.ad.funciones.funcionario.FuncionarioLN;
+import cvcc.practicas.ad.funciones.institucionesEjecutoras.InstitucionesEjecutoraLN;
+import cvcc.practicas.ad.funciones.materia.MateriaLN;
+import cvcc.practicas.ad.funciones.nivelSatisfaccion.NivelSatisfaccionLN;
+import cvcc.practicas.ad.funciones.parametroCualitativo.ParametroCualitativoLN;
 import cvcc.practicas.ad.funciones.proyectos.ProyectoLN;
+import cvcc.practicas.ad.funciones.unidadAministrativa.UnidadAdministrativaLN;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.xml.ws.WebServiceRef;
 
 /**
  *
@@ -51,10 +58,10 @@ public class swInfoPracticas {
      *     CONVENIOS
      * *************************************************************************/
     @WebMethod(operationName = "loadConvenios")
-    public String loadConvenios(@WebParam(name = "idEntidad") int idEntidad) {
+    public String loadConvenios(@WebParam(name = "codigo_unidad_academica") String codigo_unidad_academica) {
         String result = "{}";
         ConvenioLN convenioLn = new ConvenioLN();
-        result = convenioLn.loadConvenio(idEntidad);
+        result = convenioLn.loadConvenio(codigo_unidad_academica);
         // swServicioEspoch oServicioE = new swServicioEspoch();
         //CEntidad list = oServicioE.convenios(idEntidad);
         //Gson gson = new Gson();
@@ -67,9 +74,9 @@ public class swInfoPracticas {
      Lista los docentes con el número de prácticas a cargo sin importar el periodo */
 
     @WebMethod(operationName = "loadListadoDocentesPorEscuela")
-    public String loadListadoDocentesPorEscuela(@WebParam(name = "codigoCarrera") String codigoCarrera) {
+    public String loadListadoDocentesPorCarrera(@WebParam(name = "codigoEntidad") String codigoEntidad) {
         UsuarioLN uLN = new UsuarioLN();
-        String result = uLN.loadListadoDocentesPorEscuela(codigoCarrera);
+        String result = uLN.loadListadoDocentesPorCarrera(codigoEntidad);
         return result;
     }
 
@@ -115,37 +122,6 @@ public class swInfoPracticas {
      *  FUNCIONARIOS
      * *************************************************************************/
     /* Función que permite obtener los datos de un funcionario */
-    @WebMethod(operationName = "loadDatosUnFuncionario")
-    public String loadDatosUnFuncionario(@WebParam(name = "codigoPractica") int codigoPractica) {
-        FuncionarioLN DatosFuncionarioLN = new FuncionarioLN();
-        String result = DatosFuncionarioLN.loadDatosUnFuncionario(codigoPractica);
-        return result;
-    }
-
-    //ListarFuncionariosPorPractica
-    @WebMethod(operationName = "loadListarFuncionariosPorPractica")
-    public String loadListarFuncionariosPorPractica(@WebParam(name = "codigoPractica") int codigoPractica) {
-        FuncionarioLN DatosFuncionarioLN = new FuncionarioLN();
-
-        String result = DatosFuncionarioLN.loadListaFuncionarios(codigoPractica);
-        return result;
-    }
-
-    //insertarFuncionarios datos de los funcionarios con id de la empresa
-    @WebMethod(operationName = "insertarListaFuncionarios")
-    public String insertarFuncionario(@WebParam(name = "strCadenaJSON") String strCadenaJSON) {
-        String result = "{}";
-        FuncionarioLN objFuncionario = new FuncionarioLN();
-        boolean resultBoolean = false;
-        resultBoolean = objFuncionario.InsertarFuncionario(strCadenaJSON);
-        if (resultBoolean) {
-            result = "Datos Ingresados";
-        } else {
-            result = "Datos NO Ingresados";
-        }
-        return result;
-    }
-
     /* *************************************************************************
      *  MODALIDADES
      * *************************************************************************/
@@ -234,10 +210,136 @@ public class swInfoPracticas {
     }
 
     //proyectos  
-    @WebMethod(operationName = "loadLProyectos")
-    public String loadLProyectos() {
+    @WebMethod(operationName = "loadListaProyectosPorEntidad")
+    public String loadListaProyectosPorEntidad(@WebParam(name = "codidoEntidad") String codidoEntidad) {
         ProyectoLN uLN = new ProyectoLN();
-        String result = uLN.loadLProyectos();
+        String result = uLN.loadListaProyectosPorEntidad(codidoEntidad);
         return result;
+    }
+
+    @WebMethod(operationName = "guardarProyectoEstudiante")
+    public String guardarProyectoEstudiante(@WebParam(name = "idPractica") int idPractica, @WebParam(name = "idProyecto") int idProyecto) {
+        ProyectoLN uLN = new ProyectoLN();
+        String result = uLN.guardarProyectoEstudiante(idPractica, idProyecto);
+        return result;
+    }
+
+    @WebMethod(operationName = "codigoProyectoAsignado")
+    public int codigoProyectoAsignado(@WebParam(name = "idPractica") int idPractica) {
+        ProyectoLN uLN = new ProyectoLN();
+        int result = uLN.codigoProyectoAsignado(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadInstitucionesEjecutorasPorPractica")
+    public String loadInstitucionesEjecutorasPorPractica(@WebParam(name = "idPractica") int idPractica) {
+        InstitucionesEjecutoraLN uLN = new InstitucionesEjecutoraLN();
+        String result = uLN.loadInstitucionesEjecutorasPorPractica(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadFuncionariosPorPractica")
+    public String loadFuncionariosPorPractica(@WebParam(name = "idPractica") int idPractica) {
+        FuncionarioLN uLN = new FuncionarioLN();
+        String result = uLN.loadFuncionariosPorPractica(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "idFuncionarioExistentePracticaConvenio")
+    public int idFuncionarioExistentePracticaConvenio(@WebParam(name = "idPractica") int idPractica) {
+        FuncionarioLN uLN = new FuncionarioLN();
+        int result = uLN.idFuncionarioExistentePracticaConvenio(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "actualizarAsignarFuncionario")
+    public boolean actualizarAsignarFuncionario(@WebParam(name = "idPractica") int idPractica, @WebParam(name = "idFuncionario") int idFuncionario) {
+        FuncionarioLN uLN = new FuncionarioLN();
+        boolean result = uLN.actualizarAsignarFuncionario(idPractica, idFuncionario);
+        return result;
+    }
+
+    @WebMethod(operationName = "guardarUnidadAdministrativa_practicaConvenio")
+    public String guardarUnidadAdministrativa_practicaConvenio(@WebParam(name = "idPractica") int idPractica, @WebParam(name = "idFuncionario") int idUnidadAdministrativa) {
+        UnidadAdministrativaLN uLN = new UnidadAdministrativaLN();
+        String result = uLN.actualizarUnidadAdministrativa(idPractica, idUnidadAdministrativa);
+        return result;
+    }
+
+    //servicio web de convenios UNIDADES ADMINISTRATIVAS
+    @WebMethod(operationName = "idUnidadAdministrativaExistente_practicaConvenio")
+    public int idUnidadAdministrativaExistente_practicaConvenio(@WebParam(name = "idPractica") int idPractica) {
+        UnidadAdministrativaLN uLN = new UnidadAdministrativaLN();
+        int result = uLN.idUnidadAdministrativaExistente_practicaConvenio(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadUnidadAdministrativaPorPractica")
+    public String loadUnidadAdministrativaPorPractica(@WebParam(name = "idPractica") int idPractica) {
+        UnidadAdministrativaLN uLN = new UnidadAdministrativaLN();
+        String result = uLN.loadUnidadAdministrativaPorPractica(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadListarDocentesTutores")
+    public String loadListarDocentesTutores(@WebParam(name = "idPractica") int idPractica) {
+        UsuarioLN uLN = new UsuarioLN();
+        String result = uLN.loadListarDocentesTutores(idPractica);
+        return result;
+    }
+    //**************EMPRESA********************************
+    //*****************************************************
+
+    @WebMethod(operationName = "loadEmpresaPorConvenio")
+    public String loadEmpresaPorConvenio(@WebParam(name = "idPractica") int idPractica) {
+        EmpresaLN uLN = new EmpresaLN();
+        String result = uLN.loadEmpresaPorPractica(idPractica);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadMateriasCarrera")
+    public String loadMateriasCarrera(@WebParam(name = "CodigoCarrera") String CodigoCarrera) {
+        MateriaLN uLN = new MateriaLN();
+        String result = uLN.loadMateriasCarrera(CodigoCarrera);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadDocentesMateria")
+    public String loadDocentesMateria(@WebParam(name = "CodigoCarrera") String CodigoCarrera, @WebParam(name = "CodigoMateria") String CodigoMateria) {
+        MateriaLN uLN = new MateriaLN();
+        String result = uLN.loadDocentesMateria(CodigoCarrera, CodigoMateria);
+        return result;
+    }
+//**************PARAMETROS CUALITATIVOS********************************
+//*****************************************************
+
+    @WebMethod(operationName = "loadParametrosCualitativos")
+    public String loadParametrosCualitativos() {
+        ParametroCualitativoLN parametroCualitativoLN = new ParametroCualitativoLN();
+        String result = parametroCualitativoLN.loadParametrosCualitativos();
+        return result;
+    }
+
+    @WebMethod(operationName = "loadNivelesSatisfaccion")
+    public String loadNivelesSatisfaccion() {
+        NivelSatisfaccionLN oLN = new NivelSatisfaccionLN();
+        String result = oLN.loadNivelesSatisfaccion();
+        return result;
+    }
+
+    @WebMethod(operationName = "actualizarEvaluacionCualitativaPractica")
+    public boolean actualizarEvaluacionCualitativaPractica(@WebParam(name = "idPractica") int idPractica, @WebParam(name = "strJSON") String strJSON) {
+        boolean result = false;
+        EvaluacionCualitativaLN oLN = new EvaluacionCualitativaLN();
+        result = oLN.actualizarEvaluacionCualitativaPractica(idPractica, strJSON);
+        return result;
+    }
+
+    @WebMethod(operationName = "loadEvaluacionCualitativaPractica")
+    public String loadEvaluacionCualitativaPractica(@WebParam(name = "idPractica") int idPractica) {
+        String strResult;
+        EvaluacionCualitativaLN oLN = new EvaluacionCualitativaLN();
+        strResult = oLN.loadEvaluacionCualitativaPractica(idPractica);
+        return strResult;
     }
 }

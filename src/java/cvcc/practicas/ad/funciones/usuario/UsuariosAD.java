@@ -11,9 +11,11 @@ import cvcc.practicas.ad.sw.espoch.ArrayOfDictadoMateria;
 import cvcc.practicas.ad.sw.espoch.ArrayOfMateriaPensum;
 import cvcc.practicas.ad.sw.espoch.DictadoMateria;
 import cvcc.practicas.ad.sw.espoch.MateriaPensum;
+import cvcc.practicas.ad.sw.espoch.Persona;
 import cvcc.practicas.ad.sw.swServicioEspoch;
 import cvcc.practicas.entidades.CUsuario;
 import cvcc.practicas.entidades.CUsuarios;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class UsuariosAD extends CUsuarios {
     public UsuariosAD() {
     }
 
+    public UsuariosAD(List<CUsuario> lstUsuario) {
+        for (int i = 0; i < lstUsuario.size(); i++) {
+            this.addUsuario(lstUsuario.get(i));
+        }
+    }
+
     public UsuariosAD(CUsuarios usuarios) {
         for (CUsuario usuario : usuarios.getUsuarios()) {
             UsuarioAD usuarioAD = new UsuarioAD(usuario);
@@ -33,7 +41,7 @@ public class UsuariosAD extends CUsuarios {
         }
     }
 
-    public void loadListadoDocentesPorEscuela(AccesoDatos accesoDatos, String codigoEntidad) throws Exception {
+    public void loadListadoDocentesPorCarrera(String codigoEntidad) throws Exception {
         //Se obtendrá una lista de docentes de una escuela consumiendo servicios web del OASIS
         //dado un codigo de la entidad(codigo de la entidad a la cual pertenece la secretaria )
 
@@ -43,19 +51,31 @@ public class UsuariosAD extends CUsuarios {
         List<MateriaPensum> obj = lst.getMateriaPensum();
         for (MateriaPensum obj2 : obj) {
             //busca los datos de los docentes en cada materia 
-            ArrayOfDictadoMateria lstDM = oE.dictadosMateria(codigoEntidad, obj2.getCodMateria());
-            if (lstDM != null) {
-                List<DictadoMateria> objDM = lstDM.getDictadoMateria();
-                for (DictadoMateria objDM2 : objDM) {
-                    CUsuario objUsuario = new CUsuario();
-                    objUsuario.setCedula(objDM2.getDocente().getCedula());
-                    objUsuario.setNombres(objDM2.getDocente().getNombres());
-                    objUsuario.setApellidos(objDM2.getDocente().getApellidos());
-                    objUsuario.setEmail(objDM2.getDocente().getEmail());// + obj2.getMateria() + obj2.getNivel());
-                    getUsuarios().add(objUsuario);
-                }
+            loadDocentesMateria(codigoEntidad, obj2.getCodMateria());
+        }
+        eliminarRepetidos();
+    }
+
+    public void loadDocentesMateria(String codigoEntidad, String CodMateria) {
+        swServicioEspoch oE = new swServicioEspoch();
+        ArrayOfDictadoMateria lstDM = oE.dictadosMateria(codigoEntidad, CodMateria);
+        if (lstDM != null) {
+            List<DictadoMateria> objDM = lstDM.getDictadoMateria();
+            for (DictadoMateria objDM2 : objDM) {
+                CUsuario objUsuario = new CUsuario();
+                objUsuario.setCedula(objDM2.getDocente().getCedula());
+                objUsuario.setNombres(objDM2.getDocente().getNombres());
+                objUsuario.setApellidos(objDM2.getDocente().getApellidos());
+                objUsuario.setEmail(objDM2.getDocente().getEmail());// + obj2.getMateria() + obj2.getNivel());
+                //getUsuarios().add(objUsuario);
+                addUsuario(objUsuario);
             }
         }
+    }
+
+    public void loadDocentesMaterias(String codigoEntidad, String CodMateria) {
+        loadDocentesMateria(codigoEntidad, CodMateria);
+        eliminarRepetidos();
     }
 
     public void asignarNumeroPracticaDocente(AccesoDatos accesoDatos) throws Exception {
@@ -89,4 +109,65 @@ public class UsuariosAD extends CUsuarios {
             }
         }
     }
+
+    // lista de docente tutores de un estudiante
+    public void ListaTutoresPractica(AccesoDatos accesoDatos, int idPractica) {
+        //lista los estudiantes pertenecientes a una práctica
+        String cedula = "";
+        // List<CUsuario> objU = new ArrayList<>();
+        try {
+            String strSQL = "SELECT "
+               + "usuario_entidad_rol_practica.id_practica, "
+               + "usuario.cedula, "
+               + "usuario_entidad_rol_practica.estado"
+               + "     FROM "
+               + "practicas.usuario_entidad_rol_practica, "
+               + "practicas.usuario_entidad_rol, "
+               + "practicas.usuario_entidad, "
+               + "practicas.usuario"
+               + "     WHERE "
+               + "usuario_entidad_rol_practica.id_practica='" + idPractica + "' AND  "
+               //+ "usuario_entidad_rol_practica.estado=true AND "
+               + "usuario_entidad_rol_practica.id_usuario_entidad_rol = usuario_entidad_rol.id_usuario_entidad_rol AND "
+               + "usuario_entidad_rol.id_usuario_entidad = usuario_entidad.id_usuario_entidad AND "
+               + "usuario_entidad_rol.id_rol!='" + 1 + "' AND "
+               + "usuario_entidad.id_usuario = usuario.id_usuario;";
+
+            if (accesoDatos.EjecutarSQL(strSQL) == 1) {//==
+                ResultSet rslCedula = accesoDatos.getRs();
+                while (rslCedula.next()) {
+                    cedula = rslCedula.getString(2);
+                    boolean estado = rslCedula.getBoolean(3);
+
+                    CUsuario objUsuario = new CUsuario();
+                    SWDatosUsuario("EIS", cedula, estado);
+                    //objUsuario = SWDatosUsuario("EIS", cedula, estado);
+                    // addUsuario(objUsuario);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("e: " + e.getMessage());
+        }
+        // return objU;
+    }
+
+    public void SWDatosUsuario(String codCarrera, String cedula, boolean estado) {
+        //obtiene los datos de un usuario del servicio web ya sea docente o estudiante
+        CUsuario objUsuario = new CUsuario();
+        swServicioEspoch o = new swServicioEspoch();
+        Persona oPersona = o.datosUsuarioCarrera(codCarrera, cedula);//servicio web 
+        //consumo de datos del estudiante del servicio web y asigno en el objeto 
+        objUsuario.setCedula(oPersona.getCedula());
+        objUsuario.setNombres(oPersona.getNombres());
+        objUsuario.setApellidos(oPersona.getApellidos());
+        if (oPersona.getEmail().equals("")) {
+            objUsuario.setEmail("ninguno");
+        } else {
+            objUsuario.setEmail(oPersona.getEmail());
+        }
+        objUsuario.setEstado(estado);
+        // return objUsuario;
+        addUsuario(objUsuario);
+    }
+
 }
